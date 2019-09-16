@@ -1,0 +1,146 @@
+body,div,input,textarea,select,button,table{font-family: 'Nanum Barun Gothic', sans-serif; margin:0; padding:0}
+* {
+  margin:0;
+  padding:0;
+}
+*:focus {
+  outline: none;
+}
+section, footer, header, aside, nav{
+  display: block;
+}
+ul,ol{list-style:none}
+a{color:#000;text-decoration:none;cursor:pointer;}
+a:hover,a:active,a:focus{text-decoration:none}
+button{overflow:visible;border:0;background:transparent;cursor:pointer;line-height:0;vertical-align: inherit; outline:none;}
+input{-webkit-appearance:none;appearance:none}
+input{outline-width: 0; cursor:pointer }
+
+.message_wrap {
+  text-align: left;
+  margin-left: 16px;
+  .sender {
+    color: darkblue;
+    float: left;
+    margin-right: 5px;
+  }
+  .img_wrap {
+    img {
+      max-width: 300px;
+    }
+  }
+  .noti_wrap {
+    text-align:center;
+    color:gray;
+  }
+}
+
+.confirm_dialog {
+  .content_wrap {
+    text-align:left;
+    p {
+      margin-top:40px;
+    }
+    .btn_wrap {
+      text-align:center;
+      margin-top:44px;
+      button {
+        height: 50px;
+        width: 150px;
+        font-size: 16px;
+        color: #fff;
+        background: #4b96e6;
+        border-radius: 25px;
+        margin: 0 5px;
+      }
+    }
+  }
+}
+
+body.blockScroll {overflow:hidden;}
+.modal_dialog {
+  position: fixed;
+  display: table;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.2);
+  z-index: 999;
+  .dlg_wrap {
+    display:table-cell;
+    text-align:center;
+    vertical-align:middle;
+    width:100%;
+    height:100%;
+    .content {
+      position:relative;
+      background-color:#fff;
+      padding:0px;
+      margin: 0 auto;
+    }
+    .btn_close {
+      position:absolute;
+      right:24px;
+      top:23px;
+      background:url(/resources/img/btn-close-alert.png) no-repeat;
+      width:20px; height:20px
+    }
+  }
+}
+
+.room_create_dialog {
+  .content_wrap {
+    text-align:left;
+    p {
+      margin-top:40px;
+    }
+    .input_wrap {
+      text-align:center;
+      margin-top:30px;
+      input {
+        width:300px;
+        height:30px;
+        font-size:16px;
+      }
+    }
+    .btn_wrap {
+      text-align:center;
+      margin-top:34px;
+      button {
+        height: 50px;
+        width: 150px;
+        font-size: 16px;
+        color: #fff;
+        background: #4b96e6;
+        border-radius: 25px;
+        margin: 0 5px;
+      }
+    }
+  }
+}
+
+.select_dialog {
+  .content_wrap {
+    text-align:left;
+    p {
+      margin-top:40px;
+    }
+    .btn_wrap {
+      text-align:center;
+      margin-top:44px;
+      button {
+        height: 50px;
+        width: 150px;
+        font-size: 16px;
+        color: #fff;
+        background: #4b96e6;
+        border-radius: 25px;
+        margin: 0 5px;
+        &.second_btn {
+          background: #777777;
+        }
+      }
+    }
+  }
+}

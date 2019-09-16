@@ -1,0 +1,78 @@
+.chat_list_wrap {
+  width: 400px;
+  height: 500px;
+  margin: 10px auto;
+  border: 1px solid black;
+  text-align: center;
+  position: relative;
+  header {
+    height: 64px;
+    padding: 16px 34px;
+    background-color:#fafafa;
+    box-sizing: border-box;
+    h2 {
+      display: inline-block;
+      float: left;
+    }
+    .userId {
+      float: left;
+      font-size: 18px;
+      width: 120px;
+      margin: 5px 0 0 15px;
+      color: blue;
+      text-align: left;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .control_wrap {
+      display:inline-block;
+      float: right;
+      button {
+        width: 65px;
+        height: 30px;
+        text-align: center;
+        border: 1px solid black;
+        margin-right:10px;
+        &:last-child {
+          margin-right:0px;
+        }
+      }
+    }
+  }
+
+  section {
+    height:436px;
+    position: relative;
+    overflow: auto;
+    .room_list {
+      width: 250px;
+      margin: 0 auto;
+      padding-top: 20px;
+      .room {
+        text-align: center;
+        width: 100%;
+        height: 40px;
+        margin-bottom: 10px;
+        border: 1px solid black;
+        cursor: pointer;
+        p {
+          padding-top: 10px;
+        }
+      }
+    }
+    .noroom_noti {
+      padding-top: 180px;
+    }
+  }
+
+  .refresh {
+    position:absolute;
+    background:url(/resources/img/btn-refresh-default.png) no-repeat;
+    background-size:contain;
+    width:50px;
+    height:50px;
+    right: 20px;
+    bottom: 20px;
+  }
+}

@@ -1,0 +1,72 @@
+.chat_room {
+  width: 400px;
+  height: 520px;
+  margin: 10px auto;
+  border: 1px solid black;
+  text-align: center;
+  header {
+    height: 25px;
+    padding: 14px;
+    h2 {
+      display:inline-block;
+      width: 120px;
+      margin-top: -2px;
+      text-align: left;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .invite_wrap {
+      display: inline-block;
+      float: right;
+      input {
+        height: 20px;
+        font-size: 14px;
+      }
+      span {
+        cursor: pointer;
+      }
+    }
+    .leave_btn {
+      display:inline-block;
+      background:url(/resources/img/btn-date-pre-normal.png) no-repeat;
+      cursor:pointer;
+      border:none;
+      margin-right: 6px;
+      width: 24px; height: 24px;
+      float: left;
+    }
+  }
+
+  section {
+    .chat_wrap {
+      width:100%;
+      height:400px;
+      padding: 10px 0;
+      background-color:#D4E6F1;
+      overflow:scroll;
+    }
+    .input_wrap {
+      width:100%;
+      height:49px;
+      padding: 11px;
+      box-sizing:border-box;
+      .img_add {
+        display:inline-block;
+        background:url(/resources/img/ic-create-motion-area-normal.png) no-repeat;
+        width:16px; height:16px;
+        margin: 3px 6px 0 10px;
+        cursor:pointer;
+        float:left;
+      }
+      .text_input {
+        width: 300px;
+        height: 25px;
+        font-size: 13px;
+        padding: 3px;
+        box-sizing: border-box;
+        border: 1px solid #cccccc;
+      }
+    }
+  }
+}
