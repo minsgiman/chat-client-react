@@ -1,26 +1,26 @@
 import React from 'react'
 
-function ChatMessage(props) {
+function ChatMessage({type, sender, content}) {
     return (
         <div className="message_wrap">
-            {props.type === 'img' && (
+            {type === 'img' && (
                 <div className="img_wrap">
-                    <span className="sender">{props.sender} : </span>
-                    <img src={props.content} />
+                    <span className="sender">{sender} : </span>
+                    <img src={content} />
                 </div>
             )}
-            {props.type === 'text' && (
+            {type === 'text' && (
                 <div className="text_wrap">
                     <p>
-                        <span className="sender">{props.sender} : </span>
-                        <span>{props.content}</span>
+                        <span className="sender">{sender} : </span>
+                        <span>{content}</span>
                     </p>
                 </div>
             )}
-            {props.type === 'noti' && (
+            {type === 'noti' && (
                 <div className="noti_wrap">
                     <p>
-                        <span className="content">{props.content}</span>
+                        <span className="content">{content}</span>
                     </p>
                 </div>
             )}

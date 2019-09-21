@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import socketClient from './../../services/socket-client'
@@ -6,107 +6,95 @@ import {eventBus, EVENT} from './../../services/events'
 import RoomCreateDlg from './../../components/roomCreateDlg'
 import './chatlist.less'
 
-class ChatList extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            roomList: [],
-            isShowCreateDlg: false
-        };
-        eventBus.subscribe(EVENT.GET_ROOM_LIST, {callback: this.onGetRoomList, id: 'chatlist'});
-        eventBus.subscribe(EVENT.CREATE_ROOM, {callback: this.onCreateRoom, id: 'chatlist'});
-        eventBus.subscribe(EVENT.ENTER_ROOM, {callback: this.onEnterRoom, id: 'chatlist'});
-        this.getRoomList();
-    }
+function ChatList({onAlert, history, userId}) {
+    const [roomList, setRoomList] = useState([]),
+          [isShowCreateDlg, setIsShowCreateDlg] = useState(false);
 
-    componentWillUnmount() {
-        eventBus.unsubscribe(EVENT.GET_ROOM_LIST, 'chatlist');
-        eventBus.unsubscribe(EVENT.CREATE_ROOM, 'chatlist');
-        eventBus.unsubscribe(EVENT.ENTER_ROOM, 'chatlist');
-    }
-
-    onGetRoomList = (data) => {
+    const onGetRoomList = (data) => {
         if (data.code === 1 && data.rooms) {
-            this.setState({roomList: data.rooms});
+            setRoomList(data.rooms);
         }
     };
 
-    onCreateRoom = (data) => {
+    const onCreateRoom = (data) => {
         if (data.code === 1 && data.room) {
             socketClient.enterRoom(data.room);
             //socketClient.getRoomList();
         } else {
-            this.props.onAlert('방 생성', '방 생성에 실패하였습니다.');
+            onAlert('방 생성', '방 생성에 실패하였습니다.');
         }
-        this.setState({isShowCreateDlg: false});
+        setIsShowCreateDlg(false);
     };
 
-    onEnterRoom = (data) => {
+    const onEnterRoom = (data) => {
         if (data.code === 1) {
-            this.props.history.push('chatroom');
+            history.push('chatroom');
         } else {
-            this.props.onAlert('입장', '입장에 실패하였습니다.');
+            onAlert('입장', '입장에 실패하였습니다.');
         }
     };
 
-    onNameAlert = (data) => {
-        this.props.onAlert('방 생성', '방 이름을 입력하세요.');
-    };
+    const onNameAlert = (data) => onAlert('방 생성', '방 이름을 입력하세요.');
 
-    logout = () => {
+    const logout = () => {
         socketClient.logout();
-        this.props.history.push('/');
+        history.push('/');
     };
 
-    createRoom(roomName) {
-        socketClient.createRoom(roomName);
-    }
+    const createRoom = (roomName) => socketClient.createRoom(roomName);
 
-    enterRoom(room) {
-        socketClient.enterRoom(room);
-    }
+    const enterRoom = (room) => socketClient.enterRoom(room);
 
-    getRoomList() {
-        socketClient.getRoomList();
-    }
+    const getRoomList = () => socketClient.getRoomList();
 
-    render() {
-        return (
-            <div className="chat_list_wrap">
-                <header>
-                    <h2>채팅</h2>
-                    <p className="userId">{this.props.userId}</p>
-                    <div className="control_wrap">
-                        <button className="create" onClick={() => {this.setState({isShowCreateDlg: true})}}>방 생성</button>
-                        <button className="logout" onClick={this.logout}>로그아웃</button>
-                    </div>
-                </header>
-                <section>
-                    {!!this.state.roomList.length &&
-                        <ul className="room_list">
-                            {this.state.roomList.map((room, index) => {
-                                return (
-                                    <li className="room" key={index} onClick={() => this.enterRoom(room)}>
-                                        <p>{room.name}</p>
-                                    </li>
-                                )
-                            })}
-                        </ul>
-                    }
-                    {!this.state.roomList.length &&
-                        <p className="noroom_noti">방이 없습니다.</p>
-                    }
-                </section>
-                <button className="refresh" onClick={this.getRoomList}></button>
-                {this.state.isShowCreateDlg &&
-                    <RoomCreateDlg onNameAlert={this.onNameAlert}
-                                   onDlgClose={() => {this.setState({isShowCreateDlg: false})}}
-                                   onCreateRoom={this.createRoom}>
-                    </RoomCreateDlg>
+    useEffect(() => {
+        eventBus.subscribe(EVENT.GET_ROOM_LIST, {callback: onGetRoomList, id: 'chatlist'});
+        eventBus.subscribe(EVENT.CREATE_ROOM, {callback: onCreateRoom, id: 'chatlist'});
+        eventBus.subscribe(EVENT.ENTER_ROOM, {callback: onEnterRoom, id: 'chatlist'});
+        getRoomList();
+
+        return () => {
+            eventBus.unsubscribe(EVENT.GET_ROOM_LIST, 'chatlist');
+            eventBus.unsubscribe(EVENT.CREATE_ROOM, 'chatlist');
+            eventBus.unsubscribe(EVENT.ENTER_ROOM, 'chatlist');
+        }
+    }, []);
+
+    return (
+        <div className="chat_list_wrap">
+            <header>
+                <h2>채팅</h2>
+                <p className="userId">{userId}</p>
+                <div className="control_wrap">
+                    <button className="create" onClick={() => {setIsShowCreateDlg(true)}}>방 생성</button>
+                    <button className="logout" onClick={logout}>로그아웃</button>
+                </div>
+            </header>
+            <section>
+                {!!roomList.length &&
+                <ul className="room_list">
+                    {roomList.map((room, index) => {
+                        return (
+                            <li className="room" key={index} onClick={() => enterRoom(room)}>
+                                <p>{room.name}</p>
+                            </li>
+                        )
+                    })}
+                </ul>
                 }
-            </div>
-        )
-    }
+                {!roomList.length &&
+                <p className="noroom_noti">방이 없습니다.</p>
+                }
+            </section>
+            <button className="refresh" onClick={getRoomList}></button>
+            {isShowCreateDlg &&
+            <RoomCreateDlg onNameAlert={onNameAlert}
+                           onDlgClose={() => {setIsShowCreateDlg(false)}}
+                           onCreateRoom={createRoom}>
+            </RoomCreateDlg>
+            }
+        </div>
+    )
 }
 
 const mapStateToProps = state => {
