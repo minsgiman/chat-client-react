@@ -1,7 +1,7 @@
 import socketIO from 'socket.io-client';
 import clientConfig from './../config/client';
 import {eventBus, EVENT} from './events';
-import {store} from './../index';
+import store from './store';
 import {idChange, roomChange} from './../actions';
 
 const _loginRequiredHandler = Symbol('loginRequiredHandler'),
