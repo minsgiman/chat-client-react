@@ -22,4 +22,13 @@ const Checks = ({
     )
 };
 
-export default Checks;
+export default React.memo(Checks, (prevProp, nextProp) => {
+    let i, len = nextProp.checkList.length;
+
+    for (i = 0; i < len; i+=1) {
+        if (prevProp.checkList[i] !== nextProp.checkList[i]) {
+            return false;
+        }
+    }
+    return true;
+});
